@@ -18,9 +18,16 @@ static int args_check(char **av)
 
 int main(int ac, char **av)
 {
+    t_manager       manager;
+    t_manager       philos[MAX_PHILO];
+    pthread_mutex_t forks[MAX_PHILO];
+
     if (ac != 5 && ac != 6)
         return (error_out("Error: Invalid number of Arguements"));
     if (args_check(av))
         return (0);
+    init_manager(&manager, philos); // i can just grab return and error out all in nce
+    init_forks(&manager, forks, ft_atoi(av[1]));
+    lets_eat(&manager, forks)
     
 }
