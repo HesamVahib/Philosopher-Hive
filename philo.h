@@ -3,8 +3,12 @@
 
 # include <pthread.h>
 # include <stdio.h>
+# include <unistd.h>
+# include <sys/time.h>
 
 # define MAX_PHILO 400
+# define ANSI_COLOR_RED "\001\x1b[31m\002"
+# define ANSI_COLOR_RESET "\001\x1b[0m\002"
 
 typedef struct s_philo
 {
@@ -38,9 +42,22 @@ typedef struct s_manager
 
 void	ft_putendl_fd(char *s, int fd);
 int	ft_atoi(const char *str);
-int	ft_isdigit(int c);
+int	ft_isdigit(char *str);
 void	termination(char *str, t_manager *manager, pthread_mutex_t *forks);
-void    init_forks(t_manager *manager, pthread_mutex_t *forks, int  num_forks);
-void    init_manager(t_manager *manager, t_philo *philos);
+void	init_forks(t_manager *manager, pthread_mutex_t *forks, int  num_forks);
+void	init_manager(t_manager *manager, t_philo *philos);
+void	lets_eat(t_manager *manager, pthread_mutex_t *forks);
+int	log_printing(t_philo *philo, char *str, int dead);
+int	dead_lock_check(t_philo *philo);
+int error_out(char *str);
+int	ft_usleep(time_t ms);
+time_t	current_time(void);
+
+int eating(t_philo *philo);
+int sleeping(t_philo *philo);
+int thinking(t_philo *philo);
+
+int dead_check(t_philo *philos);
+int eating_endup_check(t_philo *philos);
 
 #endif

@@ -3,11 +3,11 @@
 void    init_manager(t_manager *manager, t_philo *philos) // initialize the lock for resources
 {
     manager->is_dead = 0;
-    manager->philos = philos;
+    manager->philos = philos; // FROM THE MANAGER PERSPECTIVE we define the philos but yet we do not put anything in it.
     
     if (pthread_mutex_init(&(manager->lock_write), NULL)
         || pthread_mutex_init(&(manager->lock_dead), NULL)
-        || pthread_mutex_init(&(manager->lock_meal), NULL))
+        || pthread_mutex_init(&(manager->lock_meal), NULL)) // creating a lock for each ativity from the manager perspective.
         return (termination("Error: Mutex Initialisation Failed", manager, NULL)) ; //  if init fail in one or more init mutex terminate all of them.
 }
 
@@ -46,7 +46,7 @@ static void philo_init_character(t_manager *manager, t_philo   *philo, pthread_m
     if (i == 0)
         philo->l_fork = &forks[philo_num - 1];
     else
-        philo->l_fork = &forks[i - 1];
+		philo->l_fork = &forks[i - 1];
 	philo->lock_write = &(manager->lock_write);
 	philo->lock_dead = &(manager->lock_dead);
 	philo->lock_meal = &(manager->lock_meal);
