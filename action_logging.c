@@ -15,9 +15,9 @@ void	termination(char *str, t_manager *manager, pthread_mutex_t *forks)
 		ft_putendl_fd(str, 2);
 	if (manager)
 	{
-		if (&(manager->lock_write))
-			if (pthread_mutex_destroy(&(manager->lock_write)))
-				ft_putendl_fd("Error: Mutex in lock_write destroy failed", 2);
+		// if (&(manager->lock_write)) // might have a problem because it is always there the address and it is said that destroying on uninitialized value might cause core dump!
+		// 	if (pthread_mutex_destroy(&(manager->lock_write)))
+		// 		ft_putendl_fd("Error: Mutex in lock_write destroy failed", 2);
 		if (&(manager->lock_dead))
 			if (pthread_mutex_destroy(&(manager->lock_dead)))
 				ft_putendl_fd("Error: Mutex in lock_dead destroy failed", 2);
@@ -34,19 +34,16 @@ void	termination(char *str, t_manager *manager, pthread_mutex_t *forks)
 	}
 }
 
-int	dead_lock_check(t_philo *philo)
+int dead_lock_check(t_philo *philo)
 {
-	if (pthread_mutex_lock(philo->lock_dead))
-		return (error_out("Error: Mutex lock failed"));
-	if (*(philo->dead) == 1)
-	{
-		if (pthread_mutex_unlock(philo->lock_dead))
-			return (error_out("Error: Mutex unlock failed"));
-		return (1);
-	}
-	if (pthread_mutex_unlock(philo->lock_dead))
-		return (error_out("Error: Mutex unlock failed"));
-	return (0);
+    int is_dead;
+
+    if (pthread_mutex_lock(philo->lock_dead))
+        return (error_out("Error: Mutex lock failed"));
+    is_dead = *(philo->dead);
+    if (pthread_mutex_unlock(philo->lock_dead))
+        return (error_out("Error: Mutex unlock failed"));
+    return (is_dead);
 }
 
 int log_printing(t_philo *philo, char *str, int dead)

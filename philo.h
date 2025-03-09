@@ -60,4 +60,7 @@ int thinking(t_philo *philo);
 int dead_check(t_philo *philos);
 int eating_endup_check(t_philo *philos);
 
+void    init_philos(t_manager   *manager, t_philo   *philos, pthread_mutex_t *forks, char **av);
+
+
 #endif

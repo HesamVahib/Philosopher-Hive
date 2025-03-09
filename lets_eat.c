@@ -20,13 +20,20 @@ static void *ceremony(void *arg)
 
     result = 0;
     philo = (t_philo *)arg;
+    
     if (philo->id % 2 == 0)
-        result = ft_usleep(3000);
-    else if (philo->id != 1 && philo->id == philo->n_philos && philo->id % 2 != 0)
-        result = ft_usleep(6000);
+    {
+        // printf("philo id is: %d\n", philo->id);
+        result = usleep(3000); //ft_usleep(3000);
+    }
+    else if (philo-> id != 1 && philo->id == philo->n_philos
+		&& philo->id % 2 != 0)
+    {
+        result = usleep(3000); // ft_usleep(6000);
+    }
     if (result == -1)
     {
-        ft_putendl_fd("Error: Usleep Failed", 2);
+        ft_putendl_fd("Error: uSleep Failed!", 2);
         return (NULL);
     }
     while (!dead_lock_check(philo))
@@ -51,7 +58,7 @@ static pthread_t    threads_creation(t_manager *manager, pthread_mutex_t *forks)
         if (pthread_create(&(manager->philos[i].thread), NULL, &ceremony, &(manager->philos[i])))
         {
             termination("Error: Thread Creation Failed", manager, forks);
-            break ;
+            return (0);
         }
         i++;
     }

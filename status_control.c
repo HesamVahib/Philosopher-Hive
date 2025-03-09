@@ -28,15 +28,15 @@ static int	philos_eating_count(t_philo *philos)
 
 int eating_endup_check(t_philo *philos)
 {
-    int i;
+    int count;
 
-    i = 0;
+    count = 0;
     if (philos->n_eat == -1)
-        return (0);
-    i = philos_eating_count(philos);
-    if (i < 0)
-        return (1);
-    if (i == philos->n_philos)
+		return (0);
+    count = philos_eating_count(philos);
+    if (count == -1)
+		return (1);
+    if (count == philos->n_philos)
     {
         if (pthread_mutex_lock(philos->lock_dead))
 			return (error_out("Error: Mutex Lock Failed!"));
@@ -48,25 +48,27 @@ int eating_endup_check(t_philo *philos)
     return (0);
 }
 
-static int	hunger_check(t_philo *philo)
+static int hunger_check(t_philo *philo)
 {
-	time_t	time;
+    time_t time;
 
-	if (pthread_mutex_lock(philo->lock_dead))
-		return (error_out("Error: Mutex Lock Failed!"));
-	time = current_time();
-	if (time == -1)
-		return (1);
-	if (time - philo->last_meal >= philo->t_die
-		&& philo->is_eating == 0)
-	{
-		if (pthread_mutex_unlock(philo->lock_dead))
-			return (error_out("Error: Mutex Unlock Failed!"));
-		return (1);
-	}
-	if (pthread_mutex_unlock(philo->lock_dead))
-		return (error_out("Error: Mutex Unlock Failed!"));
-	return (0);
+    if (pthread_mutex_lock(philo->lock_meal))
+        return (error_out("Error: Mutex Lock Failed!"));
+    time = current_time();
+    if (time == -1)
+    {
+        pthread_mutex_unlock(philo->lock_meal);
+        return (1);
+    }
+    if (time - philo->last_meal >= philo->t_die && philo->is_eating == 0) // if the time exceeded the amount time which indicated for starving the philo then ...
+    {
+        if (pthread_mutex_unlock(philo->lock_meal))
+            return(error_out("Error: Mutex Unlock Failed!"));
+        return (1);
+    }
+    if (pthread_mutex_unlock(philo->lock_meal))
+        return (error_out("Error: Mutex Unlock Failed!"));
+    return (0);
 }
 
 int dead_check(t_philo *philos)

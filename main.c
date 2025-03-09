@@ -28,6 +28,8 @@ int main(int ac, char **av)
         return (0);
     init_manager(&manager, philos); // i can just grab return and error out all in once
     init_forks(&manager, forks, ft_atoi(av[1]));
+    init_philos(&manager, philos, forks, av);
     lets_eat(&manager, forks);
-    printf("rea ched here\n");
+    termination(NULL, &manager, forks);
+    return (0);
 }
