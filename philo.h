@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hvahib <hvahib@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 15:01:02 by hvahib            #+#    #+#             */
+/*   Updated: 2025/04/23 12:20:21 by hvahib           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -41,26 +53,23 @@ typedef struct s_manager
 }					t_manager;
 
 void	ft_putendl_fd(char *s, int fd);
-int	ft_atoi(const char *str);
-int	ft_isdigit(char *str);
+int		ft_atoi(const char *str);
+int		ft_isdigit(char *str);
 void	termination(char *str, t_manager *manager, pthread_mutex_t *forks);
-void	init_forks(t_manager *manager, pthread_mutex_t *forks, int  num_forks);
+void	init_forks(t_manager *manager, pthread_mutex_t *forks, int num_forks);
 void	init_manager(t_manager *manager, t_philo *philos);
 void	lets_eat(t_manager *manager, pthread_mutex_t *forks);
-int	log_printing(t_philo *philo, char *str, int dead);
-int	dead_lock_check(t_philo *philo);
-int error_out(char *str);
-int	ft_usleep(time_t ms);
+int		log_printing(t_philo *philo, char *str, int dead);
+int		dead_lock_check(t_philo *philo);
+int		error_out(char *str);
+int		ft_usleep(time_t ms);
 time_t	current_time(void);
-
-int eating(t_philo *philo);
-int sleeping(t_philo *philo);
-int thinking(t_philo *philo);
-
-int dead_check(t_philo *philos);
-int eating_endup_check(t_philo *philos);
-
-void    init_philos(t_manager   *manager, t_philo   *philos, pthread_mutex_t *forks, char **av);
-
+int		eating(t_philo *philo);
+int		sleeping(t_philo *philo);
+int		thinking(t_philo *philo);
+int		dead_check(t_philo *philos);
+int		eating_endup_check(t_philo *philos);
+void	init_philos(t_manager *manager, t_philo *philos,
+			pthread_mutex_t *forks, char **av);
 
 #endif

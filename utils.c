@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hvahib <hvahib@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 15:18:18 by hvahib            #+#    #+#             */
+/*   Updated: 2025/04/23 14:34:32 by hvahib           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	ft_putendl_fd(char *s, int fd)
@@ -15,7 +27,7 @@ void	ft_putendl_fd(char *s, int fd)
 
 int	ft_isdigit(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -30,15 +42,25 @@ int	ft_isdigit(char *str)
 int	ft_usleep(time_t ms)
 {
 	time_t	start;
+	time_t	end;
+	time_t	remaining;
 
 	start = current_time();
 	if (start == -1)
 		return (1);
-	if (ms > 5 && usleep(1000 * (ms - 5)) == -1)
-		return (1);
-	while ((current_time() - start) < ms)
-		if (usleep(500) == -1)
+	end = start + ms;
+	while (1)
+	{
+		remaining = end - current_time();
+		if (remaining <= 0)
+			break ;
+		if (remaining > 20)
+			remaining = 20000;
+		else
+			remaining *= 1000;
+		if (usleep(remaining) == -1)
 			return (1);
+	}
 	return (0);
 }
 
