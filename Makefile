@@ -9,7 +9,7 @@ SRC_PART = 	main.c \
 			status_control.c \
 			action_logging.c \
 			utils.c \
-			atoi.c
+			atoi.c \
 
 
 OBJ_PART = $(SRC_PART:.c=.o)

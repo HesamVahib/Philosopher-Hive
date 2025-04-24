@@ -6,7 +6,7 @@
 /*   By: hvahib <hvahib@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:08:05 by hvahib            #+#    #+#             */
-/*   Updated: 2025/03/12 15:08:33 by hvahib           ###   ########.fr       */
+/*   Updated: 2025/04/24 10:08:53 by hvahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,23 @@ int	ft_atoi(const char *str)
 		num = num * 10 + (str[i++] - '0');
 	}
 	return (num * sign);
+}
+
+void	*ft_calloc(size_t num, size_t size)
+{
+	char	*s;
+	int		len;
+	int		i;
+
+	len = num * size;
+	s = (char *)malloc(len);
+	if (s == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		s[i] = 0;
+		i++;
+	}
+	return ((void *)s);
 }

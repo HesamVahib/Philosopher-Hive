@@ -6,7 +6,7 @@
 /*   By: hvahib <hvahib@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:16:16 by hvahib            #+#    #+#             */
-/*   Updated: 2025/04/23 12:28:38 by hvahib           ###   ########.fr       */
+/*   Updated: 2025/04/24 10:48:59 by hvahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,22 @@ static int	args_check(char **av)
 	return (0);
 }
 
+void	last_gathering(t_manager *manager)
+{
+	int	i;
+
+	if (!manager || !manager->philos)
+		return ;
+	manager->philos = ft_calloc(manager->philos->n_philos, sizeof(t_philo));
+	i = 0;
+	while (i < manager->philos->n_philos)
+	{
+		if (pthread_join(manager->philos[i].thread, NULL) != 0)
+			ft_putendl_fd("Error: pthread_join failed", 2);
+		i++;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_manager		manager;
@@ -42,6 +58,7 @@ int	main(int ac, char **av)
 	init_forks(&manager, forks, ft_atoi(av[1]));
 	init_philos(&manager, philos, forks, av);
 	lets_eat(&manager, forks);
+	last_gathering(&manager);
 	termination(NULL, &manager, forks);
 	return (0);
 }

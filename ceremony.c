@@ -6,7 +6,7 @@
 /*   By: hvahib <hvahib@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:08:37 by hvahib            #+#    #+#             */
-/*   Updated: 2025/03/12 15:11:03 by hvahib           ###   ########.fr       */
+/*   Updated: 2025/04/24 10:47:39 by hvahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	forks_handling(t_philo *philo, char c)
 	{
 		if (dead_lock_check(philo))
 			return (1);
-		if (pthread_mutex_trylock(fork) == 0)
+		if (pthread_mutex_lock(fork) == 0)
 		{
 			if (log_printing(philo, "has picked a fork", 0))
 			{

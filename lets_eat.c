@@ -6,7 +6,7 @@
 /*   By: hvahib <hvahib@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:12:06 by hvahib            #+#    #+#             */
-/*   Updated: 2025/04/23 12:28:45 by hvahib           ###   ########.fr       */
+/*   Updated: 2025/04/24 10:18:13 by hvahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static void	*ceremony(void *arg)
 	result = 0;
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		result = usleep(3000);
+		result = usleep(6000);
 	else if (philo->id != 1 && philo->id == philo->n_philos
 		&& philo->id % 2 != 0)
-		result = usleep(1500);
+		result = usleep(3000);
 	if (result == -1)
 	{
 		ft_putendl_fd("Error: uSleep Failed!", 2);
@@ -44,7 +44,7 @@ static void	*ceremony(void *arg)
 	}
 	while (!dead_lock_check(philo))
 	{
-		if (eating(philo) || sleeping(philo) || thinking(philo))
+		if (sleeping(philo) || thinking(philo) || eating(philo))
 			return (NULL);
 	}
 	return (arg);

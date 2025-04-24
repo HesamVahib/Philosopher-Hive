@@ -6,7 +6,7 @@
 /*   By: hvahib <hvahib@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:01:02 by hvahib            #+#    #+#             */
-/*   Updated: 2025/04/23 12:20:21 by hvahib           ###   ########.fr       */
+/*   Updated: 2025/04/24 11:25:40 by hvahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <stdlib.h>
 
 # define MAX_PHILO 400
 # define ANSI_COLOR_RED "\001\x1b[31m\002"
@@ -71,5 +72,6 @@ int		dead_check(t_philo *philos);
 int		eating_endup_check(t_philo *philos);
 void	init_philos(t_manager *manager, t_philo *philos,
 			pthread_mutex_t *forks, char **av);
+void	*ft_calloc(size_t num, size_t size);
 
 #endif
